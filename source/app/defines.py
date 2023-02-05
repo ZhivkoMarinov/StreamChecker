@@ -6,6 +6,11 @@ CHROME_BROWSER_PATH = {
     'windows10': 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s',
 }
 
+GUI_SETTINGS = {
+    'selection_window': {'name': 'Select operator', 'geometry': '400x100'},
+    'main_window': {'name': 'StreamChecker', 'geometry': '800x600'}
+}
+
 MOJOS_COORDINATES = {
     "Menu": [1660, 90],
     "Audio_Video": [980, 360],
