@@ -11,6 +11,10 @@ GUI_SETTINGS = {
     'main_window': {'name': 'StreamChecker', 'geometry': '800x600'}
 }
 
+LOGS = {
+    'args_log': {'dir': './log/', 'file': 'last_args'}
+}
+
 MOJOS_COORDINATES = {
     "Menu": [1660, 90],
     "Audio_Video": [980, 360],

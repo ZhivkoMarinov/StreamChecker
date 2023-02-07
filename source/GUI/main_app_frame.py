@@ -1,15 +1,15 @@
 from tkinter import *
 from tkinter import ttk
-from abs_frame_class import MainFrame
+from app.defines import GUI_SETTINGS
+from . abs_frame_class import MainFrame
+
+NAME = GUI_SETTINGS['main_window']['name']
+GEOMETRY = GUI_SETTINGS['main_window']['geometry']
 
 
 class MainWindow(MainFrame):
-    def __init__(self, name: str, geometry: str):
+    def __init__(self, name=NAME, geometry=GEOMETRY):
         super().__init__(name, geometry)
 
     def create_buttons(self):
-        pass
-
-
-if __name__ == "__main__":
-    a = MainWindow('StreamChecker', '1200x900')
+        Button(self.root, text='test').grid()

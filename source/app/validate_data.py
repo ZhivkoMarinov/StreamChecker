@@ -1,5 +1,5 @@
 import argparse
-from defines import OPERATORS
+from . defines import OPERATORS
 
 
 def validate_arguments(parser: argparse.Namespace) -> bool:
