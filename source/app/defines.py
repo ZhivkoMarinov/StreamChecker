@@ -7,8 +7,7 @@ CHROME_BROWSER_PATH = {
 }
 
 GUI_SETTINGS = {
-    'selection_window': {'name': 'Select operator', 'geometry': '400x100'},
-    'main_window': {'name': 'StreamChecker', 'geometry': '800x600'}
+    'app_name': 'StreamChecker'
 }
 
 LOGS = {
