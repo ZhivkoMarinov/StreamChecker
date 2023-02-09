@@ -6,7 +6,7 @@ import pyautogui
 import datetime
 import time
 
-webbrowser.get(CHROME_BROWSER_PATH['ubuntu20-22'])
+webbrowser.get(CHROME_BROWSER_PATH['windows10'])
 urls = ['www.google.com']
 
 
