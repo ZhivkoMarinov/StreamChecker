@@ -20,7 +20,7 @@ class JsonHandler:
         with open(os.path.join(self.dir_path, self.file_name), 'w+') as file:
             json.dump(JSON_DICT, file)
         if not os.path.isfile(os.path.join(self.dir_path, self.file_name)):
-            raise SystemError("Can't create file system. Check folder permissions. Terminating!")
+            raise SystemError("Can't create file. Check folder permissions.")
             exit(1)
 
     def open_json(self):
