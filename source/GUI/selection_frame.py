@@ -1,16 +1,16 @@
 import os
 from tkinter import *
 from tkinter import ttk
-from .json_create import JsonHandler
 from .abs_frame_class import MainFrame
-from app.defines import OPERATORS, GUI_SETTINGS, LOGS
+from app.defines import OPERATORS, GUI_SETTINGS
 
 NAME = GUI_SETTINGS['app_name']
 
 
 class SelectionFrame(MainFrame):
-    def __init__(self, name=NAME):
+    def __init__(self, arg_json, name=NAME):
         super().__init__(name)
+        self.args_json = arg_json
         self.create_buttons()
         self.root.mainloop()
 
@@ -30,6 +30,5 @@ class SelectionFrame(MainFrame):
         label.grid(row=1, column=1)
 
     def select_operator_and_quit(self, button_pressed):
-        handler = JsonHandler(LOGS['args_log']['dir'], LOGS['args_log']['file'])
-        handler.save_operator(button_pressed)
+        self.args_json.save_operator(button_pressed)
         self.root.destroy()

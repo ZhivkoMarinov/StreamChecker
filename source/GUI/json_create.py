@@ -1,11 +1,12 @@
 import os
 import json
 
-JSON_DICT = {
+JSON_ARGS_DICT = {
             'operator': None,
             'start_time': None,
             'interval': None
         }
+
 
 class JsonHandler:
     
@@ -14,17 +15,20 @@ class JsonHandler:
         self.file_name = file_name
         if not os.path.exists(self.dir_path):
             os.mkdir(self.dir_path)
-        self.json_init()
 
     def json_init(self):
         with open(os.path.join(self.dir_path, self.file_name), 'w+') as file:
-            json.dump(JSON_DICT, file)
+            json.dump(JSON_ARGS_DICT, file)
+
         if not os.path.isfile(os.path.join(self.dir_path, self.file_name)):
             raise SystemError("Can't create file. Check folder permissions.")
-            exit(1)
 
-    def open_json(self):
-        with open(os.path.join(self.dir_path, self.file_name), 'r') as file:
+    def open_json(self, json_path=None):
+        default_path = os.path.join(self.dir_path, self.file_name)
+        if json_path:
+            default_path = json_path
+
+        with open(default_path, 'r') as file:
             json_object = json.load(file)
             return json_object
 

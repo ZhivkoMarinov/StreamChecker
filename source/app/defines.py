@@ -11,7 +11,7 @@ GUI_SETTINGS = {
 }
 
 LOGS = {
-    'args_log': {'dir': './log/', 'file': 'last_args'}
+    'args_log': {'dir': './files/', 'file': 'last_args'},
 }
 
 MOJOS_COORDINATES = {
