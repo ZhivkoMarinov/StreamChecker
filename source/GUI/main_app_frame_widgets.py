@@ -53,10 +53,9 @@ def interval_entry(frame, r, c):
 
 def create_list_box(frame, r, c):
     box = Listbox(frame, selectmode=SINGLE)
-    box.config(width=30, height=10)
-    box.grid(row=r, column=c)
     scroll = Scrollbar(frame, bg='black')
-    scroll.grid(row=r, column=1)
-    box.config(yscrollcommand=scroll.set)
+    box.config(width=30, height=10, yscrollcommand=scroll.set)
     scroll.config(command=box.yview)
+    box.grid(row=r, column=c)
+    scroll.grid(row=r, column=1)
     return box

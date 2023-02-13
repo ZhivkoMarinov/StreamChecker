@@ -1,6 +1,6 @@
 from GUI.main_app_frame import MainWindow
 from GUI.selection_frame import SelectionFrame
-from GUI.json_create import JsonHandler
+from GUI.json_handler import JsonHandler
 from app.arg_parser import CommandLineArguments
 from . defines import LOGS
 

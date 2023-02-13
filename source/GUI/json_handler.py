@@ -1,5 +1,6 @@
 import os
 import json
+from app.defines import LOGS, OPERATORS
 
 JSON_ARGS_DICT = {
             'operator': None,
@@ -19,6 +20,13 @@ class JsonHandler:
     def json_init(self):
         with open(os.path.join(self.dir_path, self.file_name), 'w+') as file:
             json.dump(JSON_ARGS_DICT, file)
+
+        for operator in OPERATORS:
+            try:
+                with open(os.path.join(LOGS['args_log']['dir'], operator + '_links'), 'x') as file:
+                    json.dump(None, file)
+            except FileExistsError:
+                pass
 
         if not os.path.isfile(os.path.join(self.dir_path, self.file_name)):
             raise SystemError("Can't create file. Check folder permissions.")
