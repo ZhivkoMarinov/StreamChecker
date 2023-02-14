@@ -7,8 +7,8 @@ def submit_button(frame, r, c):
     return submit_btn
 
 
-def add_button(frame, r, c):
-    add_btn = Button(frame, text='Add')
+def add_button(frame, r, c, func):
+    add_btn = Button(frame, text='Add', command=func)
     add_btn.grid(row=r, column=c, padx=5)
     return add_btn
 

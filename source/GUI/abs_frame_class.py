@@ -6,7 +6,7 @@ class MainFrame(ABC):
     def __init__(self, name: str):
         self.root = Tk()
         self.root.title(name)
-        self.create_label()
+        # self.create_label()
         self.root.geometry('+600+300')
         # self.create_buttons()
 

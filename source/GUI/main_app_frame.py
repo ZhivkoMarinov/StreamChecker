@@ -5,7 +5,7 @@ from tkinter import ttk
 from . import main_app_frame_widgets as widgets
 from app.defines import GUI_SETTINGS, LOGS
 from . abs_frame_class import MainFrame
-from . json_handler import JsonHandler
+from . add_edit_frame import AddEdit
 
 NAME = GUI_SETTINGS['app_name']
 
@@ -33,7 +33,7 @@ class MainWindow(MainFrame):
         self.int_entry = widgets.interval_entry(self.column_left, 1, 1)
         self.list_box = widgets.create_list_box(self.list_box_frame, 0, 0)
         self.submit_btn = widgets.submit_button(self.column_left, 2, 0)
-        self.add_btn = widgets.add_button(self.text_box_btns_frame, 1, 0)
+        self.add_btn = widgets.add_button(self.text_box_btns_frame, 1, 0, self.get_add)
         self.edit_btn = widgets.edit_button(self.text_box_btns_frame, 1, 1)
         self.delete_btn = widgets.delete_button(self.text_box_btns_frame, 1, 2)
         self.load_content_to_box()
@@ -43,9 +43,13 @@ class MainWindow(MainFrame):
         operator = self.args_json.open_json()['operator']
         with open(os.path.join(LOGS['args_log']['dir'], operator + '_links')) as file:
             json_obj = json.load(file)
-            # for line, text in enumerate(file):
-            #     self.list_box.insert(END, text[:-1])
-            self.list_box.insert(END, json_obj)
+            content = json_obj if json_obj else "EMPTY"
+            self.list_box.insert(END, content)
+
+    def get_add(self):
+        print("natiskam")
+        add_edit = AddEdit(self.root)
+        self.root.mainloop()
 
     def create_label(self):
         pass
