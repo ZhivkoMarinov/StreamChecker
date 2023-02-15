@@ -33,8 +33,8 @@ class MainWindow(MainFrame):
         self.int_entry = widgets.interval_entry(self.column_left, 1, 1)
         self.list_box = widgets.create_list_box(self.list_box_frame, 0, 0)
         self.submit_btn = widgets.submit_button(self.column_left, 2, 0)
-        self.add_btn = widgets.add_button(self.text_box_btns_frame, 1, 0, self.get_add)
-        self.edit_btn = widgets.edit_button(self.text_box_btns_frame, 1, 1)
+        self.add_btn = widgets.add_button(self.text_box_btns_frame, 1, 0, self.add_edit_window)
+        self.edit_btn = widgets.edit_button(self.text_box_btns_frame, 1, 1, self.add_edit_window)
         self.delete_btn = widgets.delete_button(self.text_box_btns_frame, 1, 2)
         self.load_content_to_box()
         self.root.mainloop()
@@ -46,9 +46,8 @@ class MainWindow(MainFrame):
             content = json_obj if json_obj else "EMPTY"
             self.list_box.insert(END, content)
 
-    def get_add(self):
-        print("natiskam")
-        add_edit = AddEdit(self.root)
+    def add_edit_window(self):
+        AddEdit(self.root)
         self.root.mainloop()
 
     def create_label(self):

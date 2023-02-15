@@ -13,8 +13,8 @@ def add_button(frame, r, c, func):
     return add_btn
 
 
-def edit_button(frame, r, c):
-    edit_btn = Button(frame, text='Edit')
+def edit_button(frame, r, c, func):
+    edit_btn = Button(frame, text='Edit', command=func)
     edit_btn.grid(row=r, column=c, padx=5)
     return edit_btn
 

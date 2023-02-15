@@ -33,7 +33,6 @@ class AddEdit:
         return ok_btn
 
     def cancel_button(self):
-        cancel_btn = Button(self.main_frame, text='Cancel')
+        cancel_btn = Button(self.main_frame, text='Cancel', command=self.win.destroy)
         cancel_btn.grid(row=2, column=1)
         return cancel_btn
-
