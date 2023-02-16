@@ -1,6 +1,4 @@
-import os
 from tkinter import *
-from tkinter import ttk
 from .abs_frame_class import MainFrame
 from app.defines import OPERATORS, GUI_SETTINGS
 

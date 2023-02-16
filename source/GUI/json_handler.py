@@ -11,11 +11,12 @@ JSON_ARGS_DICT = {
 
 class JsonHandler:
     
-    def __init__(self, dir_path, file_name):
+    def __init__(self, dir_path=None, file_name=None):
         self.dir_path = dir_path
         self.file_name = file_name
-        if not os.path.exists(self.dir_path):
-            os.mkdir(self.dir_path)
+        if dir_path and file_name:
+            if not os.path.exists(self.dir_path):
+                os.mkdir(self.dir_path)
 
     def json_init(self):
         with open(os.path.join(self.dir_path, self.file_name), 'w+') as file:
@@ -32,17 +33,20 @@ class JsonHandler:
             raise SystemError("Can't create file. Check folder permissions.")
 
     def open_json(self, json_path=None):
-        default_path = os.path.join(self.dir_path, self.file_name)
+        default_path = json_path if json_path else os.path.join(self.dir_path, self.file_name)
         if json_path:
             default_path = json_path
 
         with open(default_path, 'r') as file:
-            json_object = json.load(file)
-            return json_object
+            return json.load(file)
 
-    def write_to_json(self, json_object):
-        with open(os.path.join(self.dir_path, self.file_name), 'w+') as file:
-            json.dump(json_object, file)
+    def write_to_json(self, json_object, file_path=None):
+        f_path = file_path if file_path else os.path.join(self.dir_path, self.file_name)
+        print(f_path)
+        if file_path:
+            print('TUUUUUK')
+            with open(f_path, 'w+') as file:
+                json.dump(json_object, file)
 
     def save_operator(self, value):
         json_object = self.open_json()

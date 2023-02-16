@@ -8,9 +8,9 @@ from . defines import LOGS
 class Manager:
     def __init__(self):
         self.parser = CommandLineArguments()
-        self.arg_json = JsonHandler(LOGS['args_log']['dir'], LOGS['args_log']['file'])
-        self.arg_json.json_init()
+        self.json_handler = JsonHandler(LOGS['args_log']['dir'], LOGS['args_log']['file'])
+        self.json_handler.json_init()
         if not self.parser.is_complete:
-            self.selection_frame = SelectionFrame(self.arg_json)
-            self.main_window = MainWindow(self.arg_json)
+            self.selection_frame = SelectionFrame(self.json_handler)
+            self.main_window = MainWindow(self.json_handler)
 
