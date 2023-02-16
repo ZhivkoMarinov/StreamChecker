@@ -1,4 +1,3 @@
-import json
 import os
 from tkinter import *
 from . import main_app_frame_widgets as widgets
@@ -47,7 +46,7 @@ class MainWindow(MainFrame):
         self.list_box.insert(END, json_obj if json_obj else "EMPTY")
 
     def add_edit_window(self):
-        AddEdit(self.root, self.links_file_path)
+        AddEdit(self.root, self.json_handler, self.links_file_path)
         self.root.mainloop()
 
     def create_label(self):

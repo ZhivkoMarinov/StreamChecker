@@ -8,7 +8,7 @@ from . defines import LOGS
 class Manager:
     def __init__(self):
         self.parser = CommandLineArguments()
-        self.json_handler = JsonHandler(LOGS['args_log']['dir'], LOGS['args_log']['file'])
+        self.json_handler = JsonHandler(dir_path=LOGS['args_log']['dir'], file_name=LOGS['args_log']['file'])
         self.json_handler.json_init()
         if not self.parser.is_complete:
             self.selection_frame = SelectionFrame(self.json_handler)
