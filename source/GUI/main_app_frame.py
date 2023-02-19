@@ -22,6 +22,7 @@ class MainWindow(MainFrame):
         self.list_box_frame.grid(row=0, column=0)
         self.text_box_btns_frame = Frame(self.column_right, pady=10)
         self.text_box_btns_frame.grid(row=1, column=0)
+        # self.a = AddEdit
 
         # Widgets
         self.st_label = widgets.start_time_label(self.column_left, 0, 0)
@@ -31,8 +32,8 @@ class MainWindow(MainFrame):
         self.list_box = widgets.create_list_box(self.list_box_frame, 0, 0)
         self.submit_btn = widgets.submit_button(self.column_left, 2, 0)
         self.add_btn = widgets.add_button(self.text_box_btns_frame, 1, 0, self.add_edit_window)
-        self.edit_btn = widgets.edit_button(self.text_box_btns_frame, 1, 1, self.add_edit_window)
-        self.delete_btn = widgets.delete_button(self.text_box_btns_frame, 1, 2)
+        self.edit_btn = widgets.edit_button(self.text_box_btns_frame, 1, 1, self.get_listbox_item)
+        self.delete_btn = widgets.delete_button(self.text_box_btns_frame, 1, 2, self.delete_item)
 
         # some class properties and method calls
         self.operator = self.json_handler.open_json()['operator']
@@ -42,12 +43,32 @@ class MainWindow(MainFrame):
         self.root.mainloop()
 
     def load_content_to_box(self):
+        self.list_box.delete(0, END)
         json_obj = self.json_handler.open_json(json_path=self.links_file_path)
-        self.list_box.insert(END, json_obj if json_obj else "EMPTY")
+        for idx, item in enumerate(json_obj['links']):
+            if item['name'] and item['url']:
+                self.list_box.insert(END, f"{item['name']}")
+
+    def get_listbox_item(self):
+        try:
+            selected_item = self.list_box.curselection()[0]
+        except IndexError:
+            return
+
+        json_obj = self.json_handler.open_json(json_path=self.links_file_path)
+        a = AddEdit(self.root, self.json_handler, self.links_file_path, self.load_content_to_box, selected_item)
+        a.name.insert(0, json_obj['links'][selected_item]['name'])
+        a.url.insert(0, json_obj['links'][selected_item]['url'])
 
     def add_edit_window(self):
-        AddEdit(self.root, self.json_handler, self.links_file_path)
-        self.root.mainloop()
+        AddEdit(self.root, self.json_handler, self.links_file_path, self.load_content_to_box)
+
+    def delete_item(self):
+        for idx in self.list_box.curselection():
+            json_obj = self.json_handler.open_json(json_path=self.links_file_path)
+            del json_obj['links'][idx]
+            self.json_handler.write_to_json(json_obj, file_path=self.links_file_path)
+        self.load_content_to_box()
 
     def create_label(self):
         pass

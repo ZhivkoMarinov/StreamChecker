@@ -1,11 +1,9 @@
 from tkinter import *
-from app.defines import LOGS
-from . json_handler import JsonHandler
 
 
 class AddEdit:
 
-    def __init__(self, main_win, json_handler, file_path):
+    def __init__(self, main_win, json_handler, file_path, update_func, json_obj_idx=None):
         self.main_win = main_win
         self.win = Toplevel(main_win)
         self.win.grab_set()
@@ -19,6 +17,8 @@ class AddEdit:
         self.cancel_btn = self.cancel_button()
         self.json_handler = json_handler
         self.file_path = file_path
+        self.update = update_func
+        self.json_obj_idx = json_obj_idx
 
     def name(self):
         label_name = Label(self.main_frame, text="Name")
@@ -45,8 +45,15 @@ class AddEdit:
                 'name': self.name.get(),
                 'url': self.url.get()
             }
-            self.json_handler.append_to_json(json_dict, file_path=self.file_path)
-            # self.json_handler.write_to_json(json_dict, file_path=self.file_path)
+
+            json_obj = self.json_handler.open_json(json_path=self.file_path)
+            if self.json_obj_idx is not None:
+                json_obj['links'][self.json_obj_idx] = json_dict
+            else:
+                json_obj['links'].append(json_dict)
+            self.json_handler.write_to_json(json_obj, file_path=self.file_path)
+
+        self.update()
         self.win.destroy()
 
     def cancel_button(self):

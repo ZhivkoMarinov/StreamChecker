@@ -19,8 +19,8 @@ def edit_button(frame, r, c, func):
     return edit_btn
 
 
-def delete_button(frame, r, c):
-    delete_btn = Button(frame, text='Delete')
+def delete_button(frame, r, c, func):
+    delete_btn = Button(frame, text='Delete', command=func)
     delete_btn.grid(row=r, column=c, padx=5)
     return delete_btn
 

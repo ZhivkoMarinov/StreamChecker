@@ -9,12 +9,7 @@ JSON_ARGS_DICT = {
 }
 
 LINKS = {
-    'links': [
-        {
-            'name': None,
-            'url': None
-        }
-    ]
+    'links': []
 }
 
 
@@ -54,17 +49,6 @@ class JsonHandler:
         if f_path:
             with open(f_path, 'w+') as file:
                 json.dump(json_object, file)
-        else:
-            # TODO: needs a pop-up window... maybe
-            pass
-
-    def append_to_json(self, new_data, file_path=None):
-        f_path = file_path if file_path else os.path.join(self.dir_path, self.file_name)
-        if f_path:
-            with open(f_path, 'w+') as file:
-                file_data = json.load(file)
-                file_data['links'].append(new_data)
-                json.dump(file_data, file)
         else:
             # TODO: needs a pop-up window... maybe
             pass
