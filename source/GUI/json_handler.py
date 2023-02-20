@@ -57,3 +57,13 @@ class JsonHandler:
         json_object = self.open_json()
         json_object['operator'] = value
         self.write_to_json(json_object)
+
+    def save_start_time(self, value):
+        json_object = self.open_json()
+        json_object['start_time'] = value
+        self.write_to_json(json_object)
+
+    def save_interval(self, value):
+        json_object = self.open_json()
+        json_object['interval'] = value
+        self.write_to_json(json_object)

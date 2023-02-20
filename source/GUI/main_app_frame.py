@@ -30,12 +30,13 @@ class MainWindow(MainFrame):
         self.int_label = widgets.interval_label(self.column_left, 1, 0)
         self.int_entry = widgets.interval_entry(self.column_left, 1, 1)
         self.list_box = widgets.create_list_box(self.list_box_frame, 0, 0)
-        self.submit_btn = widgets.submit_button(self.column_left, 2, 0)
+        self.submit_btn = widgets.submit_button(self.column_left, 2, 0, self.start)
         self.add_btn = widgets.add_button(self.text_box_btns_frame, 1, 0, self.add_edit_window)
         self.edit_btn = widgets.edit_button(self.text_box_btns_frame, 1, 1, self.get_listbox_item)
         self.delete_btn = widgets.delete_button(self.text_box_btns_frame, 1, 2, self.delete_item)
 
         # some class properties and method calls
+        self.is_running = False
         self.operator = self.json_handler.open_json()['operator']
         self.links_file_path = os.path.join(LOGS['args_log']['dir'], self.operator + '_links')
         self.load_content_to_box()
@@ -69,6 +70,21 @@ class MainWindow(MainFrame):
             del json_obj['links'][idx]
             self.json_handler.write_to_json(json_obj, file_path=self.links_file_path)
         self.load_content_to_box()
+
+    def start(self):
+        if not self.is_running:
+            start_time = self.st_entry.get()
+            interval = self.int_entry.get()
+            if start_time and interval:
+                self.json_handler.save_start_time(start_time)
+                self.json_handler.save_interval(interval)
+            self.submit_btn.configure(text='STOP', bg='red', activebackground='red')
+            self.is_running = True
+        else:
+            self.submit_btn.configure(text='START', bg='green', activebackground='green')
+            self.is_running = False
+            self.root.destroy()
+            self.__init__(self.json_handler)
 
     def create_label(self):
         pass
