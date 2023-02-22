@@ -1,7 +1,9 @@
 import os
 from tkinter import *
+import threading
 from . import main_app_frame_widgets as widgets
 from app.defines import GUI_SETTINGS, LOGS
+from app.engine import engine
 from . abs_frame_class import MainFrame
 from . add_edit_frame import AddEdit
 
@@ -37,6 +39,7 @@ class MainWindow(MainFrame):
 
         # some class properties and method calls
         self.is_running = False
+        self.event = threading.Event()
         self.operator = self.json_handler.open_json()['operator']
         self.links_file_path = os.path.join(LOGS['args_log']['dir'], self.operator + '_links')
         self.load_content_to_box()
@@ -80,11 +83,14 @@ class MainWindow(MainFrame):
                 self.json_handler.save_interval(interval)
             self.submit_btn.configure(text='STOP', bg='red', activebackground='red')
             self.is_running = True
+
+            new_thread = threading.Thread(target=engine, args=(self.json_handler, self.event)).start()
+
         else:
             self.submit_btn.configure(text='START', bg='green', activebackground='green')
             self.is_running = False
-            self.root.destroy()
-            self.__init__(self.json_handler)
+            self.event.set()
+            # self.root.destroy()
 
     def create_label(self):
         pass
