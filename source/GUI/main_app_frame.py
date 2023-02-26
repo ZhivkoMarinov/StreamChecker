@@ -3,7 +3,7 @@ from tkinter import *
 import threading
 from . import main_app_frame_widgets as widgets
 from app.defines import GUI_SETTINGS, LOGS
-from app.engine import engine
+from app.engine import engine_run
 from . abs_frame_class import MainFrame
 from . add_edit_frame import AddEdit
 
@@ -11,7 +11,7 @@ NAME = GUI_SETTINGS['app_name']
 
 
 class MainWindow(MainFrame):
-    def __init__(self, json_handler, name=NAME):
+    def __init__(self, json_handler, parser, name=NAME):
         super().__init__(name)
         self.json_handler = json_handler
 
@@ -24,7 +24,6 @@ class MainWindow(MainFrame):
         self.list_box_frame.grid(row=0, column=0)
         self.text_box_btns_frame = Frame(self.column_right, pady=10)
         self.text_box_btns_frame.grid(row=1, column=0)
-        # self.a = AddEdit
 
         # Widgets
         self.st_label = widgets.start_time_label(self.column_left, 0, 0)
@@ -38,12 +37,12 @@ class MainWindow(MainFrame):
         self.delete_btn = widgets.delete_button(self.text_box_btns_frame, 1, 2, self.delete_item)
 
         # some class properties and method calls
+        self.parser = parser
         self.is_running = False
-        self.event = threading.Event()
         self.operator = self.json_handler.open_json()['operator']
         self.links_file_path = os.path.join(LOGS['args_log']['dir'], self.operator + '_links')
         self.load_content_to_box()
-
+        self.root.protocol('WM_DELETE_WINDOW', self.close_window)
         self.root.mainloop()
 
     def load_content_to_box(self):
@@ -81,16 +80,18 @@ class MainWindow(MainFrame):
             if start_time and interval:
                 self.json_handler.save_start_time(start_time)
                 self.json_handler.save_interval(interval)
+                self.parser.start_time = start_time
+                self.parser.interval = interval
             self.submit_btn.configure(text='STOP', bg='red', activebackground='red')
             self.is_running = True
-
-            new_thread = threading.Thread(target=engine, args=(self.json_handler, self.event)).start()
+            engine_run(self.parser)
 
         else:
             self.submit_btn.configure(text='START', bg='green', activebackground='green')
             self.is_running = False
-            self.event.set()
-            # self.root.destroy()
 
     def create_label(self):
         pass
+
+    def close_window(self):
+        self.root.destroy()

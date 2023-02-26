@@ -1,4 +1,4 @@
-from . defines import MOJOS_COORDINATES
+from .defines import MOJOS_COORDINATES
 import pyautogui
 import time
 
@@ -58,4 +58,3 @@ def run():
         open_audio_video()
         check_func()
     pyautogui.hotkey('ctrl', 'w')
-

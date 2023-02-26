@@ -11,6 +11,5 @@ class Manager:
         self.json_handler = JsonHandler(dir_path=LOGS['args_log']['dir'], file_name=LOGS['args_log']['file'])
         self.json_handler.json_init()
         if not self.parser.is_complete:
-            self.selection_frame = SelectionFrame(self.json_handler)
-            self.main_window = MainWindow(self.json_handler)
-
+            self.selection_frame = SelectionFrame(self.json_handler, self.parser.argument_parser)
+            # self.main_window = MainWindow(self.json_handler, self.parser.argument_parser)

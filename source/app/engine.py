@@ -1,35 +1,28 @@
 from app.defines import CHROME_BROWSER_PATH
 from . import mojos as mj
-from GUI.json_handler import JsonHandler
+import multiprocessing
+import threading
 import webbrowser
 import pyautogui
 import datetime
-import time
 
 webbrowser.get(CHROME_BROWSER_PATH['windows10'])
 urls = ['www.google.com']
 
 
-def test_func(event):
-    x = 0
-    while True:
-        if event.is_set():
-            print("stopped")
-            break
-        print(x)
-        x += 1
-        event.wait(timeout=10)
+def engine_run(parser):
+    event = threading.Event()
+    new_process = multiprocessing.Process(target=engine, args=(parser, ))
 
 
-def engine(parser):
-
-    print(parser.interval)
-    return
-    x = parser.start_time
-    interval = ((x + parser.interval) % 60)
+def engine(parser, thread_event):
 
     while True and not thread_event.is_set():
-        if datetime.datetime.now().minute == x:
+        print(parser.operator, parser.start_time, parser.interval)
+        start_time = int(parser.start_time)
+        interval = int(parser.interval)
+        interval = ((start_time + interval) % 60)
+        if datetime.datetime.now().minute == start_time:
             status = pyautogui.confirm(
                 text='Start Automatic 7Mojos Stream Test? \nThe test is mouse related, \nso please dont move your mouse'
                      'during the test.',
@@ -41,20 +34,20 @@ def engine(parser):
                     mj.run()
                 pyautogui.alert(text="STREAM TEST COMPLETE. \nDon't forget to send Skype message!",
                                 title='7Mojos Stream Test', button='OK')
-                x += interval + interval
-                x = x % 60
+                start_time += interval + interval
+                start_time %= 60
                 thread_event.wait(timeout=interval - 1)
             else:
                 thread_event.wait(timeout=interval - 1)
         else:
-            if x < datetime.datetime.now().minute < interval:
+            if start_time < datetime.datetime.now().minute < interval:
                 next_check_time = interval - datetime.datetime.now().minute
                 print(f"Time to next check: {next_check_time} minutes")
             else:
-                if x < datetime.datetime.now().minute < 60:
-                    next_check_time = x + (60 - datetime.datetime.now().minute)
+                if start_time < datetime.datetime.now().minute < 60:
+                    next_check_time = start_time + (60 - datetime.datetime.now().minute)
                     print(f"Time to next check: {next_check_time} minutes")
                 else:
-                    next_check_time = x - datetime.datetime.now().minute
+                    next_check_time = start_time - datetime.datetime.now().minute
                     print(f"Time to next check: {next_check_time} minutes")
-            thread_event.wait(timeout=60)
+            thread_event.wait(timeout=3)
