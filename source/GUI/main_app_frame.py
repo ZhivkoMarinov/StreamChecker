@@ -1,9 +1,8 @@
 import os
 from tkinter import *
-import threading
 from . import main_app_frame_widgets as widgets
 from app.defines import GUI_SETTINGS, LOGS
-from app.engine import engine_run
+from app.engine import engine
 from . abs_frame_class import MainFrame
 from . add_edit_frame import AddEdit
 
@@ -84,7 +83,7 @@ class MainWindow(MainFrame):
                 self.parser.interval = interval
             self.submit_btn.configure(text='STOP', bg='red', activebackground='red')
             self.is_running = True
-            engine_run(self.parser)
+            engine(self.parser)
 
         else:
             self.submit_btn.configure(text='START', bg='green', activebackground='green')

@@ -1,6 +1,5 @@
 from app.defines import CHROME_BROWSER_PATH
 from . import mojos as mj
-import multiprocessing
 import threading
 import webbrowser
 import pyautogui
@@ -10,12 +9,8 @@ webbrowser.get(CHROME_BROWSER_PATH['windows10'])
 urls = ['www.google.com']
 
 
-def engine_run(parser):
-    event = threading.Event()
-    new_process = multiprocessing.Process(target=engine, args=(parser, ))
-
-
-def engine(parser, thread_event):
+def engine(parser):
+    thread_event = threading.Event()
 
     while True and not thread_event.is_set():
         print(parser.operator, parser.start_time, parser.interval)
