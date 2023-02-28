@@ -2,7 +2,7 @@ import os
 from tkinter import *
 from . import main_app_frame_widgets as widgets
 from app.defines import GUI_SETTINGS, LOGS
-from app.engine import engine
+from app.engine import Engine
 from . abs_frame_class import MainFrame
 from . add_edit_frame import AddEdit
 
@@ -73,6 +73,7 @@ class MainWindow(MainFrame):
         self.load_content_to_box()
 
     def start(self):
+        engine = None
         if not self.is_running:
             start_time = self.st_entry.get()
             interval = self.int_entry.get()
@@ -81,13 +82,15 @@ class MainWindow(MainFrame):
                 self.json_handler.save_interval(interval)
                 self.parser.start_time = start_time
                 self.parser.interval = interval
-            self.submit_btn.configure(text='STOP', bg='red', activebackground='red')
-            self.is_running = True
-            engine(self.parser)
-
+                self.submit_btn.configure(text='STOP', bg='red', activebackground='red')
+                self.is_running = True
+                engine = Engine(self.parser)
+                engine.run()
         else:
             self.submit_btn.configure(text='START', bg='green', activebackground='green')
             self.is_running = False
+            if engine:
+                engine.set_thread_event()
 
     def create_label(self):
         pass
