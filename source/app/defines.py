@@ -10,6 +10,8 @@ GUI_SETTINGS = {
     'app_name': 'StreamChecker'
 }
 
+ENGINE_PATH = {'path': 'app/engine.py'}
+
 LOGS = {
     'args_log': {'dir': './files/', 'file': 'last_args'},
 }

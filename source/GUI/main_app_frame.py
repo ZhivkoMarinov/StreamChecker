@@ -1,10 +1,11 @@
 import os
+import threading
+import subprocess
 from tkinter import *
 from . import main_app_frame_widgets as widgets
-from app.defines import GUI_SETTINGS, LOGS
-from app.engine import Engine
-from . abs_frame_class import MainFrame
-from . add_edit_frame import AddEdit
+from app.defines import GUI_SETTINGS, LOGS, ENGINE_PATH
+from .abs_frame_class import MainFrame
+from .add_edit_frame import AddEdit
 
 NAME = GUI_SETTINGS['app_name']
 
@@ -30,7 +31,9 @@ class MainWindow(MainFrame):
         self.int_label = widgets.interval_label(self.column_left, 1, 0)
         self.int_entry = widgets.interval_entry(self.column_left, 1, 1)
         self.list_box = widgets.create_list_box(self.list_box_frame, 0, 0)
-        self.submit_btn = widgets.submit_button(self.column_left, 2, 0, self.start)
+        # self.submit_btn = widgets.submit_button(self.column_left, 2, 0, lambda: self.start)
+        self.submit_btn = Button(self.column_left, text='START', bg='green', activebackground='green', command=lambda: threading.Thread(target=self.start).start())
+        self.submit_btn.grid(row=2, column=0, pady=10, sticky=E)
         self.add_btn = widgets.add_button(self.text_box_btns_frame, 1, 0, self.add_edit_window)
         self.edit_btn = widgets.edit_button(self.text_box_btns_frame, 1, 1, self.get_listbox_item)
         self.delete_btn = widgets.delete_button(self.text_box_btns_frame, 1, 2, self.delete_item)
@@ -73,7 +76,6 @@ class MainWindow(MainFrame):
         self.load_content_to_box()
 
     def start(self):
-        engine = None
         if not self.is_running:
             start_time = self.st_entry.get()
             interval = self.int_entry.get()
@@ -84,13 +86,11 @@ class MainWindow(MainFrame):
                 self.parser.interval = interval
                 self.submit_btn.configure(text='STOP', bg='red', activebackground='red')
                 self.is_running = True
-                engine = Engine(self.parser)
-                engine.run()
+                script_start_command = 'python ' + ENGINE_PATH['path']
+                subprocess.Popen([script_start_command, self.parser.operator, self.parser.start_time, self.parser.interval], shell=True)
         else:
             self.submit_btn.configure(text='START', bg='green', activebackground='green')
             self.is_running = False
-            if engine:
-                engine.set_thread_event()
 
     def create_label(self):
         pass
