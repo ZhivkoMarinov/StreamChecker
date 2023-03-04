@@ -1,16 +1,14 @@
 from tkinter import *
 from .abs_frame_class import MainFrame
-from . main_app_frame import MainWindow
 from app.defines import OPERATORS, GUI_SETTINGS
 
 NAME = GUI_SETTINGS['app_name']
 
 
 class SelectionFrame(MainFrame):
-    def __init__(self, json_handler, parser, name=NAME):
+    def __init__(self, json_handler, name=NAME):
         super().__init__(name)
         self.json_handler = json_handler
-        self.parser = parser
         self.create_buttons()
         self.root.mainloop()
 
@@ -30,7 +28,6 @@ class SelectionFrame(MainFrame):
         label.grid(row=1, column=1)
 
     def select_operator_and_quit(self, button_pressed):
-        self.parser.operator = button_pressed
         self.json_handler.save_operator(button_pressed)
         self.root.destroy()
-        MainWindow(self.json_handler, self.parser)
+        # MainWindow(self.json_handler, self.parser)

@@ -1,4 +1,4 @@
-from defines import MOJOS_COORDINATES
+from .defines import MOJOS_COORDINATES
 import pyautogui
 import time
 

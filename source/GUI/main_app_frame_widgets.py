@@ -2,7 +2,7 @@ from tkinter import *
 
 
 def submit_button(frame, r, c, func):
-    submit_btn = Button(frame, text='START', bg='green', activebackground='green', command=lambda: func)
+    submit_btn = Button(frame, text='START', bg='green', activebackground='green', command=func)
     submit_btn.grid(row=r, column=c, pady=10, sticky=E)
     return submit_btn
 
