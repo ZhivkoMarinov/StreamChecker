@@ -40,7 +40,7 @@ class Engine:
                     text='Start Automatic Stream Test? \n'
                          'The test is mouse related, \n'
                          'so please dont move your mouse'
-                         'until the test ends.',
+                         'until the test ends!',
                     title='Stream Test', buttons=['Yes', 'No'])
                 start_time = ((start_time + interval) % 60)
 
