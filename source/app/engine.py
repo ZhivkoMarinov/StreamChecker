@@ -37,11 +37,11 @@ class Engine:
 
             if datetime.datetime.now().minute == start_time:
                 status = pyautogui.confirm(
-                    text='Start Automatic 7Mojos Stream Test? \n'
+                    text='Start Automatic Stream Test? \n'
                          'The test is mouse related, \n'
                          'so please dont move your mouse'
-                         'during the test.',
-                    title='7Mojos Stream Test', buttons=['Yes', 'No'])
+                         'until the test ends.',
+                    title='Stream Test', buttons=['Yes', 'No'])
                 start_time = ((start_time + interval) % 60)
 
                 if status == 'Yes':
@@ -50,7 +50,7 @@ class Engine:
                         checker = MojosChecker()
                         checker.run()
                     pyautogui.alert(text="STREAM TEST COMPLETE. \nDon't forget to send Skype message!",
-                                    title='7Mojos Stream Test', button='OK')
+                                    title='Stream Test', button='OK')
                     # start_time += interval + interval
                     # start_time %= 60
                     time.sleep(60)

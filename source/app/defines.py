@@ -1,5 +1,5 @@
 
-OPERATORS = ['ag', '7mojos', 'vivo']
+OPERATORS = ['7mojos', '1XBet']
 
 CHROME_BROWSER_PATH = {
     'ubuntu20-22': '/usr/bin/google-chrome',
