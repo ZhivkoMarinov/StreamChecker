@@ -1,16 +1,14 @@
 import os
 from tkinter import *
 from . import main_app_frame_widgets as widgets
-from app.defines import GUI_SETTINGS, LOGS
+from app.defines import LOGS
 from .abs_frame_class import MainFrame
 from .add_edit_frame import AddEdit
 
-NAME = GUI_SETTINGS['app_name']
-
 
 class MainWindow(MainFrame):
-    def __init__(self, json_handler, name=NAME):
-        super().__init__(name)
+    def __init__(self, json_handler):
+        super().__init__()
         self.json_handler = json_handler
 
         # Frames

@@ -1,4 +1,4 @@
-from .defines import CHROME_BROWSER_PATH, LOGS, ALERT_SOUND, MESSAGE_TO_CLIPBOARD
+from .defines import CHROME_BROWSER_PATH, LOGS, ALERT_SOUND, MESSAGE_TO_CLIPBOARD, CONFIRM_WINDOW_MESSAGE
 from .mojos import MojosChecker
 from .json_handler import JsonHandler
 from playsound import playsound
@@ -10,7 +10,7 @@ import pyautogui
 import time
 import os
 
-webbrowser.get(CHROME_BROWSER_PATH['windows10'])
+webbrowser.get(CHROME_BROWSER_PATH['ubuntu20-22'])
 test_urls = ['www.google.com']
 
 
@@ -36,20 +36,12 @@ class Engine:
 
     def run(self):
 
-        if self.start_time < datetime.now().minute:
-            self.adjust_start_time()
-
-        while True:
-
+        while True:            
             if datetime.now().minute == self.start_time:
-                sound = playsound(self.alert_sound_path)
+                playsound(self.alert_sound_path)
                 status = pyautogui.confirm(
-                    text='Start Automatic Stream Test? \n'
-                         'The test is mouse related, \n'
-                         'so please dont move your mouse'
-                         'until the test ends!',
+                    text=CONFIRM_WINDOW_MESSAGE,
                     title='Stream Test', buttons=['Yes', 'No'])
-                self.adjust_start_time()
 
                 if status == 'Yes':
                     for url in self.urls:
@@ -59,18 +51,15 @@ class Engine:
                     pyautogui.alert(text="STREAM TEST COMPLETE. \nDon't forget to send Skype message!",
                                     title='Stream Test', button='OK')
                     pyperclip.copy(MESSAGE_TO_CLIPBOARD) #message is ready for pasting
-                else:
-                    time.sleep(60)
-            
-            else:
-                self.print_next_check_time()
-            
+                
+                self.set_next_start_time()
+
+            self.print_next_check_time()
             time.sleep(60)
 
-    def adjust_start_time(self):
+    def set_next_start_time(self):
         self.start_time = (self.start_time + self.interval) % 60
 
-
     def print_next_check_time(self):
-        next_check_time = self.start_time - datetime.now().minute
-        print(f"Time to next check: {next_check_time} minutes")
+        next_check_time = (60 - datetime.now().minute + self.start_time) % 60
+        print(f'Time to next check: {next_check_time} min')

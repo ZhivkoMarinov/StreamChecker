@@ -1,13 +1,11 @@
 from tkinter import *
 from .abs_frame_class import MainFrame
-from app.defines import OPERATORS, GUI_SETTINGS
-
-NAME = GUI_SETTINGS['app_name']
+from app.defines import OPERATORS
 
 
 class SelectionFrame(MainFrame):
-    def __init__(self, json_handler, name=NAME):
-        super().__init__(name)
+    def __init__(self, json_handler):
+        super().__init__()
         self.json_handler = json_handler
         self.create_buttons()
         self.root.mainloop()

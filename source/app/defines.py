@@ -1,5 +1,5 @@
 
-OPERATORS = ['7mojos', '1XBet']
+OPERATORS = ['Vivo', '7mojos', '1XBet']
 
 CHROME_BROWSER_PATH = {
     'ubuntu20-22': '/usr/bin/google-chrome',
@@ -17,6 +17,8 @@ LOGS = {
 }
 
 ALERT_SOUND = 'warble-h.wav'
+
+CONFIRM_WINDOW_MESSAGE = 'Start Automatic Stream Test? \nThe test is mouse related, so please,\ndont move your mouse until the test ends!'
 
 MESSAGE_TO_CLIPBOARD = 'Turkish RL, Galaxy RL, Galaxy BJ, Baccarat, АВ, ТРFO, DT, Neon RL, 1xBet DT, 1xBet Tr. RL, 1xBet AB, 1xBet TP, 1xBet TPFO  - Проверени'
 

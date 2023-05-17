@@ -1,11 +1,13 @@
 from abc import ABC, abstractmethod
+from app.defines import GUI_SETTINGS
 from tkinter import *
 
+NAME = GUI_SETTINGS['app_name']
 
 class MainFrame(ABC):
-    def __init__(self, name: str):
+    def __init__(self):
         self.root = Tk()
-        self.root.title(name)
+        self.root.title(NAME)
         # self.create_label()
         self.root.geometry('+600+300')
         # self.create_buttons()
