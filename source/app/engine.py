@@ -1,9 +1,12 @@
-from .defines import CHROME_BROWSER_PATH, LOGS
+from .defines import CHROME_BROWSER_PATH, LOGS, ALERT_SOUND, MESSAGE_TO_CLIPBOARD
 from .mojos import MojosChecker
 from .json_handler import JsonHandler
+from playsound import playsound
+from datetime import datetime
+from pathlib import Path
+import pyperclip
 import webbrowser
 import pyautogui
-import datetime
 import time
 import os
 
@@ -20,6 +23,7 @@ class Engine:
         self.json_handler = JsonHandler()
         self.links_file_path = os.path.join(LOGS['args_log']['dir'], self.operator + '_links')
         self.urls = self.get_urls()
+        self.alert_sound_path = Path().absolute() / ALERT_SOUND
 
     def get_urls(self):
         if os.path.exists(self.links_file_path):
@@ -31,18 +35,21 @@ class Engine:
             exit(1)
 
     def run(self):
-        while True:
-            start_time = int(self.start_time)
-            interval = int(self.interval)
 
-            if datetime.datetime.now().minute == start_time:
+        if self.start_time < datetime.now().minute:
+            self.adjust_start_time()
+
+        while True:
+
+            if datetime.now().minute == self.start_time:
+                sound = playsound(self.alert_sound_path)
                 status = pyautogui.confirm(
                     text='Start Automatic Stream Test? \n'
                          'The test is mouse related, \n'
                          'so please dont move your mouse'
                          'until the test ends!',
                     title='Stream Test', buttons=['Yes', 'No'])
-                start_time = ((start_time + interval) % 60)
+                self.adjust_start_time()
 
                 if status == 'Yes':
                     for url in self.urls:
@@ -51,21 +58,19 @@ class Engine:
                         checker.run()
                     pyautogui.alert(text="STREAM TEST COMPLETE. \nDon't forget to send Skype message!",
                                     title='Stream Test', button='OK')
-                    # start_time += interval + interval
-                    # start_time %= 60
-                    time.sleep(60)
+                    pyperclip.copy(MESSAGE_TO_CLIPBOARD) #message is ready for pasting
                 else:
                     time.sleep(60)
+            
             else:
-                if start_time < datetime.datetime.now().minute < interval:
-                    next_check_time = interval - datetime.datetime.now().minute
-                    print(f"Time to next check: {next_check_time} minutes")
-                else:
-                    if start_time < datetime.datetime.now().minute < 60:
-                        next_check_time = start_time + (60 - datetime.datetime.now().minute)
-                        print(f"Time to next check: {next_check_time} minutes")
-                    else:
-                        next_check_time = start_time - datetime.datetime.now().minute
-                        print(f"Time to next check: {next_check_time} minutes")
-                time.sleep(60)
+                self.print_next_check_time()
+            
+            time.sleep(60)
 
+    def adjust_start_time(self):
+        self.start_time = (self.start_time + self.interval) % 60
+
+
+    def print_next_check_time(self):
+        next_check_time = self.start_time - datetime.now().minute
+        print(f"Time to next check: {next_check_time} minutes")

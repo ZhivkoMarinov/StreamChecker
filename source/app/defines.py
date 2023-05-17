@@ -16,12 +16,16 @@ LOGS = {
     'args_log': {'dir': './files/', 'file': 'last_args'},
 }
 
+ALERT_SOUND = 'warble-h.wav'
+
+MESSAGE_TO_CLIPBOARD = 'Turkish RL, Galaxy RL, Galaxy BJ, Baccarat, АВ, ТРFO, DT, Neon RL, 1xBet DT, 1xBet Tr. RL, 1xBet AB, 1xBet TP, 1xBet TPFO  - Проверени'
+
 MOJOS_COORDINATES = {
     "Menu": [1660, 90],
     "Audio_Video": [980, 360],
-    "480": [950, 660],
-    "720": [950, 620],
-    "1080": [950, 580],
+    "480": [950, 775],
+    "720": [950, 735],
+    "1080": [950, 695],
     "Blank_click": [1500, 530],
     "Short_sleep": 0.5,
     "Long_sleep": 5

@@ -19,9 +19,12 @@ class SelectionFrame(MainFrame):
                 height=2,
                 width=10,
                 text=operator.upper(),
-                command=lambda m=operator: self.select_operator_and_quit(m)
+                command=lambda m=operator: self.select_operator_and_quit(m),
+                state=DISABLED
             )
             btn.grid(row=2, column=idx, padx=10, pady=10)
+            if operator == '7mojos':
+                btn['state'] = 'normal'
 
     def create_label(self):
         label = Label(self.root, text='Select operator', font='bold')
